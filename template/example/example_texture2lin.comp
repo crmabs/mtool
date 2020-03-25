@@ -1,0 +1,473 @@
+Composition {
+	CurrentTime = 1,
+	RenderRange = { 1, 1 },
+	GlobalRange = { 1, 1 },
+	CurrentID = 9,
+	HiQ = true,
+	PlaybackUpdateMode = 0,
+	Version = "Fusion Studio 16.0 build 43",
+	SavedOutputs = 0,
+	HeldTools = 0,
+	DisabledTools = 0,
+	LockedTools = 0,
+	AudioOffset = 0,
+	Resumable = true,
+	OutputClips = {
+		"Q:\\Work\\tropenzorg\\3d\\Asset\\box60ml\\Texture\\lin\\artiteek_diffuse.0000.exr"
+	},
+	Tools = {
+		Loader1 = Loader {
+			Clips = {
+				Clip {
+					ID = "Clip1",
+					Filename = "q:\\Work\\tropenzorg\\3d\\Asset\\box60ml\\Texture\\orig\\teek.png",
+					FormatID = "PNGFormat",
+					StartFrame = -1,
+					LengthSetManually = true,
+					TrimIn = 0,
+					TrimOut = 0,
+					ExtendFirst = 0,
+					ExtendLast = 0,
+					Loop = 0,
+					AspectMode = 0,
+					Depth = 0,
+					TimeCode = 0,
+					GlobalStart = 1,
+					GlobalEnd = 1
+				}
+			},
+			Inputs = {
+				["Gamut.SLogVersion"] = Input { Value = FuID { "SLog2" }, },
+				["Clip1.PNGFormat.PostMultiply"] = Input { Value = 1, },
+			},
+			ViewInfo = OperatorInfo { Pos = { 0, 16.5 } },
+		},
+		Resize1 = BetterResize {
+			Inputs = {
+				Width = Input { Value = 4096, },
+				Height = Input { Value = 5527, },
+				KeepAspect = Input { Value = 1, },
+				HiQOnly = Input { Value = 0, },
+				PixelAspect = Input { Value = { 1, 1 }, },
+				FilterMethod = Input { Value = 8, },
+				Input = Input {
+					SourceOp = "Loader1",
+					Source = "Output",
+				},
+			},
+			ViewInfo = OperatorInfo { Pos = { 110, 16.5 } },
+		},
+		toLIN = GamutConvert {
+			NameSet = true,
+			Inputs = {
+				SourceSpace = Input { Value = FuID { "sRGB" }, },
+				Input = Input {
+					SourceOp = "Resize1",
+					Source = "Output",
+				},
+			},
+			ViewInfo = OperatorInfo { Pos = { 220, 16.5 } },
+		},
+		ChangeDepth1 = ChangeDepth {
+			Inputs = {
+				Depth = Input { Value = 3, },
+				Input = Input {
+					SourceOp = "toLIN",
+					Source = "Output",
+				},
+			},
+			ViewInfo = OperatorInfo { Pos = { 330, 16.5 } },
+		},
+		Saver1 = Saver {
+			Inputs = {
+				ProcessWhenBlendIs00 = Input { Value = 0, },
+				Clip = Input {
+					Value = Clip {
+						Filename = "Q:\\Work\\tropenzorg\\3d\\Asset\\box60ml\\Texture\\lin\\artiteek_diffuse.0000.exr",
+						FormatID = "OpenEXRFormat",
+						Length = 0,
+						Saving = true,
+						TrimIn = 0,
+						ExtendFirst = 0,
+						ExtendLast = 0,
+						Loop = 1,
+						AspectMode = 0,
+						Depth = 0,
+						GlobalStart = -2000000000,
+						GlobalEnd = 0
+					},
+				},
+				OutputFormat = Input { Value = FuID { "OpenEXRFormat" }, },
+				["Gamut.SLogVersion"] = Input { Value = FuID { "SLog2" }, },
+				Input = Input {
+					SourceOp = "ChangeDepth1",
+					Source = "Output",
+				},
+				["OpenEXRFormat.Depth"] = Input { Value = 1, },
+				["OpenEXRFormat.Channels"] = Input { Value = 1, },
+				["OpenEXRFormat.ZEnable"] = Input { Value = 0, },
+				["OpenEXRFormat.CovEnable"] = Input { Value = 0, },
+				["OpenEXRFormat.ObjIDEnable"] = Input { Value = 0, },
+				["OpenEXRFormat.MatIDEnable"] = Input { Value = 0, },
+				["OpenEXRFormat.UEnable"] = Input { Value = 0, },
+				["OpenEXRFormat.VEnable"] = Input { Value = 0, },
+				["OpenEXRFormat.XNormEnable"] = Input { Value = 0, },
+				["OpenEXRFormat.YNormEnable"] = Input { Value = 0, },
+				["OpenEXRFormat.ZNormEnable"] = Input { Value = 0, },
+				["OpenEXRFormat.XVelEnable"] = Input { Value = 0, },
+				["OpenEXRFormat.YVelEnable"] = Input { Value = 0, },
+				["OpenEXRFormat.XRevVelEnable"] = Input { Value = 0, },
+				["OpenEXRFormat.YRevVelEnable"] = Input { Value = 0, },
+				["OpenEXRFormat.XPosEnable"] = Input { Value = 0, },
+				["OpenEXRFormat.YPosEnable"] = Input { Value = 0, },
+				["OpenEXRFormat.ZPosEnable"] = Input { Value = 0, },
+				["OpenEXRFormat.XDispEnable"] = Input { Value = 0, },
+				["OpenEXRFormat.YDispEnable"] = Input { Value = 0, },
+			},
+			ViewInfo = OperatorInfo { Pos = { 440, 16.5 } },
+		}
+	},
+	Frames = {
+		{
+			FrameTypeID = "ChildFrame",
+			Mode = 3,
+			LayoutPreset = 0,
+			Left = 0,
+			Top = 27,
+			Width = 1920,
+			Height = 1079,
+			ZoneInfo = {
+				AuxRight = { Expanded = true },
+				Right = { Expanded = true, },
+				Left = { Expanded = false, },
+				AuxLeft = { Expanded = true },
+				["!Left"] = {
+				},
+				["!Right"] = {
+				}
+			},
+			ViewInfo = {
+				Keyframes = { Show = false, RatioX = 0.321428571428571, RatioY = 1, },
+				LayoutStrip = { Show = true, RatioX = 1, },
+				Inspector = { Show = true, RatioX = 1, RatioY = 1, },
+				Effects = { Show = false, RatioX = 1, RatioY = 0.5, },
+				Viewer2 = { Show = true, RatioX = 0.472222222222222, RatioY = 1, },
+				Comments = { Show = false },
+				Clips = { Show = false, RatioX = 1, },
+				ActionStrip = { Show = true, RatioX = 1, },
+				Time = { Show = true, RatioX = 1, PixelY = 83, },
+				MediaPool = { Show = false, RatioX = 1, RatioY = 0.5, },
+				Nodes = { Show = true, RatioX = 1, RatioY = 1, },
+				Metadata = { Show = false, RatioX = 1, RatioY = 0.5, },
+				Viewer1 = { Show = true, RatioX = 0.527777777777778, RatioY = 1, },
+				Spline = { Show = false, RatioX = 0.357142857142857, RatioY = 1, },
+				OuterColumns = {
+					RatioX = 1,
+					RatioY = 0.924528301886792,
+				},
+				OuterLeft = {
+					PixelX = 420,
+					RatioY = 1,
+				},
+				CenterSplit = {
+					RatioX = 0.340659340659341,
+					RatioY = 1,
+				},
+				InnerColumns = {
+					RatioX = 1,
+					RatioY = 0.444191343963554,
+				},
+				InnerLeft = {
+					PixelX = 420,
+					RatioY = 1,
+				},
+				ViewerSplit = {
+					RatioX = 1,
+					RatioY = 0.572164948453608,
+				},
+				InnerRight = {
+					PixelX = 420,
+					RatioY = 1,
+				},
+				MainSplit = {
+					RatioX = 1,
+					RatioY = 0.441913439635535,
+				},
+				OuterRight = {
+					PixelX = 420,
+					RatioY = 1,
+				}
+			},
+			Views = ordered() {
+				MediaPool = "MediaPoolView",
+				Effects = MultiView {
+					Active = "EffectView",
+					ViewList = ordered() {
+						EffectView = "EffectView"
+					},
+				},
+				Nodes = MultiView {
+					Active = "FlowView",
+					ViewList = ordered() {
+						FlowView = "FlowView"
+					},
+					Names = {
+						FlowView = "FlowView"
+					},
+					FlowView = FlowView {
+						Flags = {
+							AutoHideNavigator = true,
+							GridSnap = true,
+							AutoSnap = true,
+							ShowInstance = false,
+							RemoveRouters = true
+						},
+						NavigatorSize = { 200, 140 },
+						Direction = "Horizontal",
+						PipeStyle = "Direct",
+						Scale = 1.5,
+						Offset = { 0, 0 }
+					}
+				},
+				Keyframes = MultiView {
+					Active = "TimelineView",
+					ViewList = ordered() {
+						TimelineView = "TimelineView"
+					},
+					Names = {
+						TimelineView = "TimelineView"
+					},
+					TimelineView = TimelineView {
+						TreeControlState = {
+						},
+						DisplayMode = "All Tools",
+						ShowCurrentTimeTools = true,
+						Filter = "Show All",
+						ShowSelectedTools = false,
+						ShowAnimatedToolsOnly = false,
+						ShowEditBoxes = false,
+						KeyFrameView = {
+							Position = { Left = 232, Bottom = 320 },
+							ScaleX = 1.06998050682261,
+							OffsetX = -24.6095516569201,
+							OffsetY = 0,
+							AutoScaling = "scroll",
+							AutoSnapTo = "frame",
+							AutoSnapToGuidelines = false,
+							GuidelinesGrabEnabled = true,
+							GuidelinesSnapTo = "frame"
+						},
+						Spreadsheet = { LeftPos = 232, Visible = false }
+					}
+				},
+				Spline = MultiView {
+					Active = "SplineView",
+					ViewList = ordered() {
+						SplineView = "SplineEditorView"
+					},
+					Names = {
+						SplineView = "SplineView"
+					},
+					SplineView = SplineEditorView {
+						LeftPos = 264,
+						ScaleX = 0.2,
+						ScaleY = 0.00338983050847458,
+						OffsetX = -3.4,
+						OffsetY = 0,
+						AutoScaling = "scroll",
+						AutoSnapTo = "frame",
+						AutoSnapToGuidelines = false,
+						GuidelinesSnapTo = "frame",
+						ShowKeyMarkers = false,
+						IndependentHandles = false,
+						ShowNonSplineModifiers = false,
+						GuidelinesGrabEnabled = true,
+						ShowOneToolOnly = false,
+						ShowSelectedTools = false,
+						ShowAllInputs = false,
+						Filter = "Show All"
+					}
+				},
+				Inspector = MultiView {
+					Active = "Tools",
+					ViewList = ordered() {
+						Tools = "ControlView",
+						Modifiers = "ModifierView"
+					},
+				},
+				Viewer1 = MultiView {
+					Active = "LeftView",
+					ViewList = ordered() {
+						LeftView = "PreviewContainer"
+					},
+					Names = {
+						LeftView = "LeftView"
+					},
+				},
+				Viewer2 = MultiView {
+					Active = "RightView",
+					ViewList = ordered() {
+						RightView = "PreviewContainer"
+					},
+					Names = {
+						RightView = "RightView"
+					},
+				},
+				Time = "TimeView",
+				ActionStrip = "ActionStripView",
+				LayoutStrip = "LayoutStripView",
+				Clips = "ClipsView",
+				Metadata = "MetadataView"
+			},
+			Layout = {
+				Rows = 2,
+				RatioX = 1,
+				RatioY = 1,
+				{ ID = "LayoutStrip", RatioX = 1, FixedY = 36, Flat = true },
+				{
+					Columns = 2,
+					RatioY = 0.924528301886792,
+					{
+						Rows = 3,
+						RatioX = 0.340659340659341,
+						RatioY = 1,
+						{
+							Rows = 2,
+							RatioX = 1,
+							RatioY = 1,
+							{
+								Columns = 2,
+								RatioX = 1,
+								RatioY = 0.572164948453608,
+								{ ID = "Viewer1", RatioX = 0.527777777777778, RatioY = 1 },
+								{ ID = "Viewer2", RatioX = 0.472222222222222 }
+							},
+							{ ID = "Time", FixedY = 83, Flat = true }
+						},
+						{ ID = "ActionStrip", FixedY = 50, Flat = true },
+						{ ID = "Nodes", RatioX = 1, RatioY = 1 }
+					},
+					{ ID = "Inspector", RatioX = 1, RatioY = 1 }
+				}
+			}
+		}
+	},
+	Prefs = {
+		Comp = {
+			AutoSave = {
+				Delay = 300,
+			},
+			Paths = {
+			},
+			FlowView = {
+				ShowInstanceLinks = false,
+				GridSnap = true,
+			},
+			LastFile = "C:\\Users\\andras\\AppData\\Roaming\\Blackmagic Design\\Fusion\\Scripts\\Comp\\nanlut",
+			Interactive = {
+				Proxy = {
+					Auto = true,
+				},
+			},
+			FrameFormat = {
+				GuideRatio = 1.77777777777778,
+				DepthFull = 3,
+				DepthPreview = 3,
+				Rate = 25,
+				DepthInteractive = 3,
+			},
+			Splines = {
+				TrackerPointsShow = 0,
+			},
+			Unsorted = {
+				GlobalStart = 1,
+				GlobalEnd = 1,
+				RenderSettings = {
+					Configs = {
+						Final = {
+							Quality = true,
+							MotionBlur = true,
+							UpdateMode = "Some",
+							UseNetwork = false,
+							SizeType = 1,
+							CustomWidth = 200,
+							CustomHeight = 160,
+							CustomAspect = true,
+							StepRender = false,
+							StepSize = 5,
+							PriorityClasses = "all",
+							ShowSlaves = false
+						},
+						Preview = {
+							Quality = false,
+							MotionBlur = true,
+							UpdateMode = "Some",
+							UseNetwork = false,
+							SizeType = 1,
+							CustomWidth = 200,
+							CustomHeight = 160,
+							CustomAspect = true,
+							StepRender = false,
+							StepSize = 5,
+							PriorityClasses = "all",
+							ShowSlaves = false
+						}
+					},
+					CurrentConfig = "Final",
+					PreviewConfig = "Preview"
+				}
+			},
+			Preview = {
+				HiQ = false,
+			},
+			Memory = {
+				Render = {
+					SimultaneousBranching = true
+				},
+				Interactive = {
+					SimultaneousBranching = true,
+				}
+			},
+			Views = {
+				Defaults = {
+					OpToolbar = {
+						Size = 1
+					}
+				},
+				View1 = {
+					SubView = {
+						Enabled = false
+					},
+					PickW = 1,
+					PickH = 1,
+					FullScreen = false,
+					AlwaysOnTop = true,
+				},
+				View2 = {
+					PickH = 1,
+					PickW = 1,
+					AlwaysOnTop = true,
+					FullScreen = false
+				},
+				LeftView = {
+					PickW = 1,
+					PickH = 1,
+				},
+				RightView = {
+					PickW = 1,
+					PickH = 1,
+				}
+			},
+			QuickTime = {
+			},
+			Tweaks = {
+				OpenCL = {
+					Enable = 2,
+					Caching = 2
+				}
+			}
+		}
+	},
+}
+
+ 

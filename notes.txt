@@ -1,0 +1,392 @@
+#!/bin/bash
+# rand-string.sh
+# Generating an 8-character "random" string.
+
+if [ -n "$1" ]  #  If command-line argument present,
+then            #+ then set start-string to it.
+  str0="$1"
+else            #  Else use PID of script as start-string.
+  str0="$$"
+fi
+
+POS=2  # Starting from position 2 in the string.
+LEN=8  # Extract eight characters.
+
+str1=$( echo "$str0" | md5sum | md5sum )
+#  Doubly scramble     ^^^^^^   ^^^^^^
+#+ by piping and repiping to md5sum.
+
+randstring="${str1:$POS:$LEN}"
+# Can parameterize ^^^^ ^^^^
+
+echo "$randstring"
+
+exit $?
+
+# bozo$ ./rand-string.sh my-password
+# 1bdd88c4
+
+#  No, this is is not recommended
+#+ as a method of generating hack-proof passwords.
+
+--------------------------------------
+
+
+
+# You might want to convert your return statement to an echo statement - that way your function output could be captured using $() braces, which seems to be exactly what you want.
+# 
+# Here is an example:
+# 
+# function fun1(){
+#   echo 34
+# }
+# 
+# function fun2(){
+#   local res=$(fun1)
+#   echo $res
+# }
+# Another way to get the return value (if you just want to return an integer 0-255) is $?.
+# 
+# function fun1(){
+#   return 34
+# }
+# 
+# function fun2(){
+#   fun1
+#   local res=$?
+#   echo $res
+# }
+# Also, note that you can use the return value to use boolean logic like fun1 || fun2 will only run fun2 if fun1 returns a 0 value. The default return value is the exit value of the last statement executed within the function.
+
+
+
+# ------------------------
+# The return statement sets the exit code of the function, much the same as exit will do for the entire script.
+# 
+# The exit code for the last command is always available in the $? variable.
+# 
+# function fun1(){
+#   return 34
+# }
+# 
+# function fun2(){
+#   local res=$(fun1)
+#   echo $? # <-- Always echos 0 since the 'local' command passes.
+# 
+#   res=$(fun1)
+#   echo $?  #<-- Outputs 34
+# }
+
+
+-------------------
+local message="$1"
+ if [ "$message" == "" ]; then
+    #nincs message -> csinalunk
+	a=`date +%Y-%m-%d-%H-%M-%S`
+    b=`whoami`
+    message="${a}-${b}"
+    echo "message:" $message
+ #else
+    #van message -> azt hasznaljuk 
+ fi
+
+
+ -----------------
+
+background and no rinya for short tasks
+   ConEmu64.exe ${WGPATH}/mtool/bat/moka.bat -new_console:bn
+
+ez a jo szerintem
+ start ConEmu64.exe -run ${MBAT}/moka.bat -new_console:nb
+
+
+ -------------------------
+ # get changed files list and remove files that should be ignored
+CHANGED=$(git diff --name-only $LAST_COMMIT HEAD | grep -vf ignore.txt)
+echo $CHANGED
+
+---------------
+
+m.typeintree $PWD png | xargs -L 1 -d '\n' vleff.sh
+
+nem kell a delimiter
+m.typeintree $PWD png | xargs -L 1 vleff.sh
+
+viszont -r hogy ures sorra ne fusson
+m.typeintree $PWD png | xargs -r -L 1 vleff.sh
+
+-t echoes the assembled command GREAT DEBUG feature!!
+m.typeintree $PWD png | xargs -t -r -L 1 vleff.sh pina
+and generates command:
+vleff.sh pina /q/Work/tropenzorg/3d/Scene/deetpack/Texture/uvlayout.png
+
+
+<list generator> | xargs -r -L 1 <exe> <exe_arg1> <exe_arg2> 
+
+fantastic pseudo code:
+foreach line in <list generator>
+   run <exe> <exe_arg1> <exe_arg2> line
+
+-------------------------------
+pipe to shell scripts
+
+If the external program (that you are scripting) already takes input from stdin, your script does not need to do anything. For example, awk reads from stdin, so a short script to count words per line:
+
+#!/bin/sh
+awk '{print NF}'
+Then
+
+./myscript.sh <<END
+one
+one two
+one two three
+END
+outputs
+
+1
+2
+3
+
+----
+check to ensure there is stdin first, and if not, then use a command line argument instead if given.
+
+#!/bin/bash
+# Check to see if a pipe exists on stdin.
+if [ -p /dev/stdin ]; then
+        echo "Data was piped to this script!"
+        # If we want to read the input line by line
+        while IFS= read line; do
+                echo "Line: ${line}"
+        done
+        # Or if we want to simply grab all the data, we can simply use cat instead
+        # cat
+else
+        echo "No input was found on stdin, skipping!"
+        # Checking to ensure a filename was specified and that it exists
+        if [ -f "$1" ]; then
+                echo "Filename specified: ${1}"
+                echo "Doing things now.."
+        else
+                echo "No input given!"
+        fi
+fi
+
+------------------------------
+
+find $PWD | xargs -n1
+
+
+-------------------
+
+>runcomp.bat a:\mlnworkgroup\mtool\_tmp\0408217275_.comp  1 1 1
+"c:\Program Files\Blackmagic Design\Fusion Render Node 16\FusionRenderNode.exe" a:\mlnworkgroup\mtool\_tmp\0408217275_.comp -render -start 1 -end 1 -step 1  -pri high -quiet -quit
+
+atnevezem .compra es lerendereli... ^^^
+
+---
+>/dev/null 2>&1;
+silence to devnull
+
+---
+                                   exactly the string -
+                                                      .
+                                             beginning
+                                                   ...     
+                                          spearator
+                                                  .
+                                        substitute
+                                                 . 
+                                                 s!BBB-aaaCClllccEEE!uu!p 
+    echo "US/Central - 10:26 PM (CST)" | sed -n "s/^.*-\s*\(\S*\).*$/\1/p"
+
+-n      suppress printing -> only prints the match
+
+
+s       substitute
+^.*     anything at the beginning
+-       up until the dash
+\s*     any space characters (any whitespace character)
+\(      start capture group
+\S*     any non-space characters
+\)      end capture group
+.*$     anything at the end
+\1      substitute 1st capture group for everything on line
+p       print it
+-------------
+
+dictionary locally declared and passed on ... wonderful
+
+
+m.roff(){
+
+        # add new stuff
+        sounds[malac]="roff";
+
+        # and use it 
+        echo "ugatas ${sounds[dog]}";
+}
+
+m.dictdemo(){
+
+        # create
+        declare -A sounds;
+        # add
+        sounds[dog]="vau";
+        echo "ugatas ${sounds[dog]}";
+
+        # call a function that can use the dict
+        m.rof;
+        echo "rofoges ${sounds[malac]}";
+
+        #print all
+        echo ${sounds[@]};
+
+        # destroy
+        unset -v sounds;
+        echo ${sounds[@]};
+}
+
+------------------
+exporting functions
+
+list of variables exported
+ export -p > ebbe.txt
+
+list of exported funcs
+ declare -x -F
+
+exp funcs and code
+ declare -x -f
+
+ ------------------------------
+
+ import hashlib, time
+
+def generate_uid(node):
+  hash = hashlib.md5()
+  hash.update(node.path() + str(time.time()))
+  node.setUserData('uid', hash.hexdigest()[:10])
+	
+# To get the value:
+node.userData.get('uid')
+
+-----
+
+multiple conditions
+
+function kuka() {
+    local k="${1}";
+    local n="${2}";
+    if [[ ( "$k" -eq 1 && "$n" = "11" ) || ( "$k" -eq 2 && "$n" = "fos" ) ]]; then
+        echo "megvan";
+    else
+        echo "nincs meg";
+    fi
+}
+
+
+-----------------
+
+submit comp to network manager - worx - LUA
+
+fuscript.exe -l lua -i
+
+fu = Fusion("192.168.0.15")
+ dump(fu:GetAttrs())
+res =fu:QueueComp({ FileName = [[q:\Work\snap\Comp\box60ml_label_corrector.comp]], QueuedBy = "Bob Lloblaw", Start = 1, End = 2, Step = 1 });
+print(res) --> ami egy renderjob submittolva RenderJob 
+
+---
+ugyanez python
+
+fu = bmd.scriptapp("Fusion")
+fu.QueueComp({
+"FileName": "q:\\Work\\snap\\Comp\\box60ml_label_corrector.comp",
+"QueuedBy": "bub",
+"Start": 1,
+"End": 25,
+"Step": 5,
+"ProxyScale": 2
+})
+
+fu = bmd.scriptapp("Fusion")
+fu.QueueComp({"FileName": "q:\\Work\\snap\\Comp\\box60ml_label_corrector.comp", "Start": 1,"End": 25, "Step": 5 })
+
+
+---------------------
+
+FRAME SAVED SCRIPT - single file no seq - FUSION
+
+path, name = string.match(filename, "^(.+[/\\])(.+)")
+name, extension = string.match(name, "^(.+)(%..+)$")
+barename, sequence = string.match(name, "^(.-)(%d+)$")
+print("bare:"..barename..extension)
+os.remove(path..barename..extension)
+os.rename(filename, path..barename..extension)
+os.remove(filename)
+
+--------------------
+
+
+auses all images on the image stack to be output
+igy irod ki az osszeset - write all from stack
+oiiotool multi.tif -sisplit -o:all=1 sub%04d.tif
+
+--
+
+R, G, B, A, Z_noice, N_noice.Y, N_noice.Z, N_noice.X, denoise_albedo_noice.R, denoise_albedo_noice.G, denoise_albedo_noice.B
+-ch R, G, B, A, Z_noice, N_noice.Y, N_noice.Z, N_noice.X, denoise_albedo_noice.R, denoise_albedo_noice.G, denoise_albedo_noice.B, variance.R=1, variance.G=1, variance.B=1, variance.A=1
+
+
+oiiotool.exe -i cpuoutuj.exr --ch variance.R=1,variance.G=1,variance.B=1,variance.A=1 -o vch.exr
+
+oiiotool.exe -i gpuout.exr --ch R,G,B,A,Z_noice,N_noice.Y,N_noice.Z,N_noice.X,denoise_albedo_noice.R,denoise_albedo_noice.G,denoise_albedo_noice.B -o pimped.exr
+
+erase all metadata
+--eraseattrib ".*"
+
+-------------------------
+
+WGPATH a:\mlnworkgroup
+
+--ch variance.R=R,variance.G=G,variance.B=B,variance.A=1
+
+ebbe mar csak a meta kell!!!
+oiiotool.exe -i kamuvar.exr --ch variance.R=R,variance.G=G,variance.B=B,variance.A=1 gpuout.exr --chappend -o chkamuvar.exr
+
+oiiotool.exe -i kamuvar.exr --ch variance.R=R,variance.G=G,variance.B=B,variance.A=1 gpuout.exr --chappend --nosoftwareattrib --attrib "arnold/aovs/variance/filter" "variance_filter"  --attrib "arnold/aovs/variance/filter_width" 2  --attrib "arnold/aovs/variance/lpe" 1  --attrib "arnold/aovs/variance/lpe_expression" "C.*"  --attrib "arnold/aovs/variance/source" "RGBA" --attrib "arnold/aovs/RGBA/filter" "gaussian_filter" --attrib "arnold/aovs/RGBA/filter_width" 2 --attrib "arnold/aovs/RGBA/lpe" 1 --attrib "arnold/aovs/RGBA/lpe_expression" "C.*" --attrib "arnold/aovs/RGBA/source" "RGBA" -o chkamuvar.exr
+ 
+-------------------
+
+
+render a cpu image for proper arnold metadata:
+orig_cpu_meta.exr
+
+make it one empty channel (K) -> this is the master that contains the metadata
+oiiotool.exe -i orig_cpu_meta.exr --ch K=0 --nosoftwareattrib -o only_meta.exr
+
+gpu beauty + laplacian    --abs is to abs() the result
+oiiotool.exe -i gpuout.exr --ch variance.R=R,variance.G=G,variance.B=B,variance.A=1 --laplacian --abs --nosoftwareattrib --eraseattrib ".*" -o gpu_laplacian_abs.exr
+
+append variance to gpu render 
+oiiotool.exe -i gpu_laplacian_abs.exr gpuout.exr --chappend --nosoftwareattrib --eraseattrib ".*" -o vared.exr
+
+add metadata - the image size is determined by the first input - meta image is small...
+oiiotool.exe -i vared.exr only_meta.exr --metamerge --chappend --nosoftwareattrib -o metaed.exr
+
+feed noice!
+noice.exe -i metaed.exr -o dnmetaed.exr
+
+
+
+oiiotool.exe -i orig_cpu_meta.exr --ch K=0 --nosoftwareattrib -o only_meta.exr
+oiiotool.exe -i gpuout.exr --ch variance.R=R,variance.G=G,variance.B=B,variance.A=1 --laplacian --abs --nosoftwareattrib --eraseattrib ".*" -o gpu_laplacian_abs.exr
+oiiotool.exe -i gpu_laplacian_abs.exr gpuout.exr --chappend --nosoftwareattrib --eraseattrib ".*" -o vared.exr
+oiiotool.exe -i vared.exr only_meta.exr --metamerge --chappend --nosoftwareattrib -o metaed.exr
+noice.exe -i metaed.exr -o dnmetaed.exr
+
+
+--
+Contrast enhancement: stretch pixel value range to exactly fit [0-1]
+
+oiiotool input.tif -subc {TOP.MINCOLOR} -divc {TOP.MAXCOLOR} -o out.tif
