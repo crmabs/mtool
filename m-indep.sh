@@ -440,7 +440,7 @@ export MVRB=0;
 
 # mtool root
 mtool=$(m.linpath "${WGPATH}/mtool");
-echo "mtool root: [${mtool}]";
+# echo "mtool root: [${mtool}]";
 
 # temp files
 #[ ! -e "${mtool}/_tmp" ] && mkdir -p "${mtool}/_tmp";
@@ -464,9 +464,9 @@ if [[  ${JOB##*/} == 'snap'  ]]; then
     export PATH="${JOB}/bin:${PATH}";
     export PATH="${JOB}/bat:${PATH}";
 
-    echo 'snap bin bat is on path';
-else
-    echo 'not a snap project';
+#    echo 'snap bin bat is on path';
+#else
+#    echo 'not a snap project';
 
 fi
 
