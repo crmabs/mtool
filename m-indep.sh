@@ -451,22 +451,22 @@ echo "mtool root: [${mtool}]";
 
 # linux path to bat utilities folder
 # use m.fgbat() and m.bgbat() to run them
-export MBAT="${mtool}/bat"
+# export MBAT="${mtool}/bat"
 
 # windows path to bat utilities
 # use this variable in any .bat file
 # to access this collection. 
-export BBAT=$(m.winpath "${MBAT}");
-export PATH="${mtool}/bin:${PATH}";
-export PATH="${MBAT}:${PATH}";
+#export BBAT=$(m.winpath "${MBAT}");
+export PATH="${mtool}/bin:${mtool}/bat:${PATH}";
+
 
 if [[  ${JOB##*/} == 'snap'  ]]; then
-export PATH="${JOB}/bin:${PATH}";
-export PATH="${JOB}/bat:${PATH}";
+    export PATH="${JOB}/bin:${PATH}";
+    export PATH="${JOB}/bat:${PATH}";
 
-#echo 'snap bin bat is on path';
-#else
-#echo 'not a snap project';
+    echo 'snap bin bat is on path';
+else
+    echo 'not a snap project';
 
 fi
 
