@@ -428,7 +428,7 @@ m.winpath(){
 }
  
 
-export -f m.rwspace m.allchannels m.allch_except m.side  m.fn_base m.fn_ext m.fn_mext m.namekey m.waituntilany m.singleline m.rndstr m.remws  m.waitfornof m.noffiles m.sec2min;
+export -f m.rwspace m.allchannels m.allch_except m.side  m.fn_base m.fn_ext m.fn_mext m.namekey m.waituntilany m.singleline m.rndstr m.remws  m.waitfornof m.noffiles m.sec2min m.repext;
  
 
 # -----------------------------------------
