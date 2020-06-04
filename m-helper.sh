@@ -612,7 +612,7 @@ m.runcomp() {
 # <template name> <in seq path> <out seq path> <start> <end> <step>
 m.templaterender() {
     local comp=$(m.templateio $1 $2 $3);
-    m.runcomp ${comp} $4 $5 $6 >/dev/null 2>&1;
+    m.runcomp ${comp} $4 $5 $6 >/dev/null;
     echo $comp;
 }
 
@@ -677,7 +677,7 @@ m.8bit2tx(){
     local tx=$(m.txnext "${pin}");
     # any sRGB -> 8bit linear png 
     oiiotool.exe -i "${pin}" --colorconvert sRGB linear -o "${lin}"
-    maketx -v --oiio --checknan -d uint8 -u --stats --filter radial-lanczos3 --format tiff -o "${tx}" "${lin}"  >/dev/null 2>&1;
+    maketx -v --oiio --checknan -d uint8 -u --stats --filter radial-lanczos3 --format tiff -o "${tx}" "${lin}"  >/dev/null;
      
     rm -f "${lin}";
     echo "${tx}";
@@ -721,7 +721,7 @@ m.dnew(){
         fi
 
         m.killvar $1 
-        m.dnew $1 >/dev/null 2>&1;
+        m.dnew $1 >/dev/null;
 
     else
         declare -Ag $1;

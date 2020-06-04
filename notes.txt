@@ -390,3 +390,231 @@ noice.exe -i metaed.exr -o dnmetaed.exr
 Contrast enhancement: stretch pixel value range to exactly fit [0-1]
 
 oiiotool input.tif -subc {TOP.MINCOLOR} -divc {TOP.MAXCOLOR} -o out.tif
+
+---
+python puska
+ # sampling quality => hi or lo
+    if smpQuality == "lo":
+        rop1.parm("ar_enable_adaptive_sampling").set(False)
+        rop2.parm("ar_enable_adaptive_sampling").set(False)
+        rop3.parm("ar_enable_adaptive_sampling").set(False)
+        rop4.parm("ar_enable_adaptive_sampling").set(False)
+        _msg("sampling quality: lo")
+    else:
+        rop1.parm("ar_enable_adaptive_sampling").set(True)
+        rop2.parm("ar_enable_adaptive_sampling").set(True)
+        rop3.parm("ar_enable_adaptive_sampling").set(True)
+        rop4.parm("ar_enable_adaptive_sampling").set(True)
+        _msg("sampling quality: hi")
+
+    #_msg("outScale " + outScale)
+    resfrac = "1"
+    if outScale == "2":
+        resfrac = "0.5"
+    
+    if outScale == "4":
+        resfrac = "0.25"
+    
+    if outScale == "8":
+        resfrac = "0.125"
+
+    _msg("resolution fraction: " + resfrac)
+
+
+    if outScale == "1":
+        rop1.parm("override_camerares").set(False)
+        rop2.parm("override_camerares").set(False)
+        rop3.parm("override_camerares").set(False)
+        rop4.parm("override_camerares").set(False)
+        # rop1.parm("res_fraction").set("0.5")
+        # rop2.parm("res_fraction").set("0.5")
+        # rop3.parm("res_fraction").set("0.5")
+        # rop4.parm("res_fraction").set("0.5")
+    else:
+        rop1.parm("override_camerares").set(True)
+        rop2.parm("override_camerares").set(True)
+        rop3.parm("override_camerares").set(True)
+        rop4.parm("override_camerares").set(True)
+        rop1.parm("res_fraction").set(resfrac)
+        rop2.parm("res_fraction").set(resfrac)
+        rop3.parm("res_fraction").set(resfrac)
+        rop4.parm("res_fraction").set(resfrac)
+
+    #rop1.parm("override_camerares").set(False)
+    #rop1.parm("res_fraction").set("0.5")
+
+    # rop1.parm("override_camerares").set(False)
+    # rop1.parm("ar_enable_adaptive_sampling").set(True)
+    # rop2.parm("override_camerares").set(False)
+    # rop2.parm("ar_enable_adaptive_sampling").set(True)
+    # rop3.parm("override_camerares").set(False)
+    # rop3.parm("ar_enable_adaptive_sampling").set(True)
+    # rop4.parm("override_camerares").set(False)
+    # rop4.parm("ar_enable_adaptive_sampling").set(True)
+    # _msg("render is half res")
+    # _msg(" ")
+
+
+---
+
+
+
+    # _msg("rop1 params ")
+    # for parm in rop1.allParms():
+    #     _msg( parm.path() + " " + str(parm.eval()))
+    # onrop = rop1.parm("override_camerares").eval()
+
+    # keepRes = False
+    # _msg(" onrop:" + str(onrop))
+    # if ( outScale == "1" and onrop == 0 ):
+    #     keepRes = True
+    
+    # _msg("keep res: " + str(keepRes))
+--
+
+prompt
+
+
+function m.title() {
+  if [[ -z "$ORIG" ]]; then
+    ORIG=$PS1
+  fi
+  TITLE="\[\e]2;$*\a\]"
+  PS1=${ORIG}${TITLE}
+}
+
+-------------------
+
+
+function m.fstore() { 
+    filedata[${#filedata[@]}]=$1
+}
+
+
+# 0 - OK - do nothing
+# 1 - empty path - nonfixable
+# 2 - no extension - nonfixable
+# 3 - fixable - fix it!
+m.dfile() {
+    
+    local isnic=0; 
+    local n="${1}";
+    local fnoext="${n%.*}"; # no ext
+    local ffile="${n##*/}"; # full filename
+    local fdir="${n%/*}"; # directory part
+    local parent=${fdir##*/} # parent
+    local vext=$(m.vfxext "${ffile}");
+    local vname=${ffile%"${vext}"};
+    
+    # cannot handle case
+    if [[ ${#n} == 0 ]]; then
+        #echo "ERR wtf, empty file to check for nice...";
+        return 1; # don't work with empty path
+    fi
+
+    # cannot handle case
+    # zero dots?
+    local fdot=$(m.dotcount "{$ffile}");
+    if [[ $fdot == 0 ]]; then
+        #echo "SKIP file with no extension ${n}"
+        return 2; # well valid, don't touch it!
+    fi
+
+     
+    # dots > 2 ?
+    local dots=$(m.dotcount "${vname}");
+    if [[ $dots > 0 ]]; then
+        isnic=3;
+    fi
+
+    # white space?
+    local hasws=0;
+    m.hasws "${vname}";
+    if [[ $? == 1 ]]; then
+        isnic=3;
+        hasws=1;
+    fi
+
+    MVRB=1;
+    if [[ $MVRB == 1 ]]; then
+        echo "        orig ${n}";
+        echo "         dir ${fdir}";
+        echo "      no ext ${fnoext}";
+        echo "      parent ${parent}";
+        echo "   full file ${ffile}";
+        echo "    vfx name ${vname}";    
+        echo "     vfx ext ${vext}";
+        echo "     is nice ${isnic}";
+        echo "      has ws ${hasws}";
+        echo "        dots ${dots}";
+    fi
+
+    m.fstore $fdir;
+    m.fstore $vname;
+    m.fstore $vext;
+
+    return $isnic;
+
+}
+
+  
+
+ 
+m.isfixable(){
+    
+
+    m.dfile "${1}";
+    local res=$?;
+    echo "dfile res:${res}----${1}";
+    if [[ $res == 3 ]]; then
+         
+        return 0; #fixable
+    fi
+    
+    if [[ $res == 0 ]]; then
+         
+        return 1; #ok
+    else 
+        
+        return 1; #unfixable 1 and 2
+    fi
+}
+
+
+
+m.fix2nice(){
+    declare -a -g filedata;
+    local fn="${1}";
+    #echo "${fn}";
+    local np="";
+    m.isfixable "${fn}";
+    #echo "${fn}";
+    local res=$?;
+    #echo "[res:${res}][${filedata[0]}][${filedata[1]}][${filedata[2]}]";
+    local vname="${filedata[1]}";
+    echo "vn-(${vname})";
+    if [[ ${res} == 0 ]]; then
+         echo "fixable ${fn}";
+         vname=${filedata[1]};
+         np=$(m.tonice "${vname}");
+         echo "javitott[${np}]";
+         echo ' '
+    fi
+    unset -v filedata;
+}
+
+------------
+spatr=$(basename ${inputfile});
+
+
+REPLACE . with "" nothing
+spatr=$(echo "dn_${spatr}" | sed 's|\.||g');
+
+----
+string contains
+
+string='My long string'
+if [[ $string == *"My long"* ]]; then
+  echo "It's there!"
+fi
+
