@@ -618,3 +618,7 @@ if [[ $string == *"My long"* ]]; then
   echo "It's there!"
 fi
 
+-------------
+
+pyhton package version
+pip install --upgrade --force-reinstall --no-cache-dir --ignore-installed pycurl==7.43.0.2

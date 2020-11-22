@@ -266,12 +266,43 @@ m.float2graytx() {
     echo "${tx}";
 }
 
+# arnold magatol:
+# .hdr -v -u --unpremult --oiio --colorconvert "linear" "linear"
+# .exr -v -u --unpremult --oiio --colorconvert "linear" "linear"
+
+# ez lossy
+# .jpg -v -u --unpremult --oiio --format exr -d half --compression dwaa --colorconvert "sRGB" "linear"
+
+# oiiotool resize .hdri
+# oiiotool.exe '/q/Work/royal/In/vhdri_sky/dlight/173-hdri-skies-com.hdr' -v --unpremult --colorconvert "linear" "linear" -resize 2048x2048 -o '/q/Work/royal/In/vhdri_sky/dlight/173-hsky_2k.hdr'
+
+
+# in [width]x[height] out
+m.rszhdri(){
+    oiiotool.exe "$1" -v --unpremult --colorconvert "linear" "linear" -resize "$2" -o "${3}"
+}
+
+
 m.float2tx() {
     local tx=$(m.txnext "${1}");
-    maketx --hicomp --oiio --fixnan box3 -d float -u --stats --filter radial-lanczos3 --format exr -o "${tx}" "$1"  >/dev/null;
+    maketx  -u --oiio --fixnan box3  --colorconvert "linear" "linear" -o "${tx}" "$1"  >/dev/null;
     echo "${tx}";
 }
 
+m.srgbtotx() {
+    local pin="$1";
+    #if [[ ! -e "${1}" ]]; then
+    #    echo "file not found:[${pin}]";
+    #    exit 1;
+    #fi
+
+    local ext="${pin##*.}";
+    local fn="${pin%.${ext}}";
+    local outf="${fn}.tx";
+    
+    maketx -v -u --unpremult --oiio --format tiff --colorconvert "sRGB" "linear" -o "${outf}" "$1" ; # >/dev/null;
+    echo "${outf}";
+}
 
 m.8bit2tx(){
     local pin="$1";
@@ -428,7 +459,7 @@ m.winpath(){
 }
  
 
-export -f m.rwspace m.allchannels m.allch_except m.side  m.fn_base m.fn_ext m.fn_mext m.namekey m.waituntilany m.singleline m.rndstr m.remws  m.waitfornof m.noffiles m.sec2min m.repext;
+export -f m.srgbtotx m.rwspace m.allchannels m.allch_except m.side  m.fn_base m.fn_ext m.fn_mext m.namekey m.waituntilany m.singleline m.rndstr m.remws  m.waitfornof m.noffiles m.sec2min m.repext;
  
 
 # -----------------------------------------
