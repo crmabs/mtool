@@ -1,2 +1,0 @@
-box_60ml_natural_ca,     box60ml_solo  box_60ml/final/09_1_Natural_Box_60ml.tx
-box_60ml_deet40_ca,      box60ml_solo  box_60ml/final/02_1_DEET40_Box_60ml.tx
