@@ -2,6 +2,7 @@
 
 if [[ -z ${1} ]]; then
 	echo 'pls specify args: hip rop start end step'
+	echo 'Skip the first / defining the ROP!  /out/renderop => out/renderrop'
 	exit 1;
 fi
 

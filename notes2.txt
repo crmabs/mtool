@@ -1,0 +1,32 @@
+
+
+oiiotool -i a.exr --mulc 0.2126 , 0.7152 , 0.0722  -o sum.exr
+
+0.2126 * R + 0.7152 * G + 0.0722 * B
+
+
+oiiotool -v -i ml_wintersolstice_1242_.hdr --iscolorspace linear --ch R,G,B --resize:filter=lanczos3 2048x1024 --chsum:weight=.2126,.7152,.0722 --ch 0,0,0 -o winterstolstice_greyaaa.exr
+
+
+- POP wrangle
+
+
+
+
+// stick to surf - 1=surf
+int pr;
+vector uv;
+float d = xyzdist(1,@P,pr,uv);
+@P = primuv(1,'P',pr,uv);
+
+
+
+
+
+shopnet1/spritefog
+sphere_matte.pic
+
+// rotate instances
+float angle = ch("../rot_amount");
+float rand = fit01(random(@ptnum),0,angle);
+p@rot = quaternion(radians(rand), v@up);

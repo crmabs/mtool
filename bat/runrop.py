@@ -30,8 +30,8 @@ def main():
     _msg("arg5: end           {}".format(sys.argv[4]))
     _msg("arg5: step          {}".format(sys.argv[5]))
     _msg("-------------------------------")
-
-    
+    _msg("Just a reminder:")
+    _msg("    Skip the first / defining the ROP!")
 
     hip = str(sys.argv[1])
     rop = str(sys.argv[2])
@@ -40,9 +40,19 @@ def main():
     step = str(sys.argv[5])
     
     # for some reason it replaces the input / to some cmder root path... or so
-    ropToRender = "/out/" + rop
+    #if rop.startswith("/") :
+    #    ropToRender = rop
+    #else:
+    #    ropToRender = "/out/" + rop
+    ropToRender = "/" + rop
 
-    hou.hipFile.load(hip)
+    _msg("final ROP:" + ropToRender )
+
+    #hou.hipFile.load(hip)
+    try:
+        hou.hipFile.load(hip)
+    except hou.LoadWarning:
+        _msg("scene load had some trabl")
 
     bossrop = hou.node(ropToRender)
     if bossrop is None:
