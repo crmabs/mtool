@@ -30,6 +30,8 @@ if [[ -z ${step} ]]; then
 	echo 'no step defined using step = 1'
 fi
 
+pathtome=$( dirname -- "$0" );
+echo ${pathtome}
 
-
-hython "${WGPATH}/mtool/bat/runrop.py"  "${hip}"  "${rop}"  "${start}"  "${end}"  "${step}";
+# hython "${WGPATH}/mtool/bat/runrop.py"  "${hip}"  "${rop}"  "${start}"  "${end}"  "${step}";
+hython "${pathtome}/runrop.py"  "${hip}"  "${rop}"  "${start}"  "${end}"  "${step}";
